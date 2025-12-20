@@ -1,0 +1,28 @@
+emotion_aware_companion/
+│
+├── main.py
+├── camera.py
+├── audio_monitor.py
+├── speech_input.py
+├── affective_state.py
+├── llm_agent.py
+│
+├── requirements.txt
+└── README.md   (προαιρετικό)
+
+
+
+
+
+The system runs locally and continuously monitors facial and vocal cues.
+When the user explicitly interacts, these implicit affective signals are fused with self-reported input and interpreted by a language model to generate adaptive study recommendations.”
+
+Αυτό δείχνει:
+
+κατανόηση affective computing
+
+human-in-the-loop
+
+multimodal fusion
+
+σωστή χρήση LLM (όχι gimmick)
