@@ -2,13 +2,11 @@ from collections import deque
 import time
 
 class AffectiveState:
-    def __init__(self, max_history=50):
+    def __init__(self, max_history=50, voice_weight=0.5):
         self.history = deque(maxlen=max_history)
+        self.voice_weight = float(voice_weight)
 
     def update(self, face_emotion, voice_fatigue):
-        """
-        Called continuously (per frame / cycle)
-        """
         if not face_emotion:
             return
 
@@ -32,32 +30,32 @@ class AffectiveState:
         })
 
     def peek(self):
-        """
-        Lightweight snapshot for UI / demo
-        """
         if not self.history:
             return {
                 "avg_valence": 0.0,
                 "avg_arousal": 0.0,
-                "voice_fatigue_ratio": 0.0
+                "voice_fatigue_ratio_raw": 0.0,
+                "voice_fatigue_ratio": 0.0,  # weighted
             }
 
         valences = [x["valence"] for x in self.history]
         arousals = [x["arousal"] for x in self.history]
         voice = [x["voice_fatigue"] for x in self.history]
 
+        raw = sum(voice) / len(voice)                  # 0..1
+        weighted = raw * self.voice_weight             # halve influence
+
         return {
             "avg_valence": sum(valences) / len(valences),
             "avg_arousal": sum(arousals) / len(arousals),
-            "voice_fatigue_ratio": sum(voice) / len(voice)
+            "voice_fatigue_ratio_raw": raw,
+            "voice_fatigue_ratio": weighted,
         }
 
     def summarize(self):
-        """
-        Heavier summary for LLM & reports
-        """
         snap = self.peek()
 
+        # Use the *weighted* ratio for decisions
         if snap["avg_valence"] < -0.3 and snap["voice_fatigue_ratio"] > 0.5:
             state = "Sustained fatigue"
         elif snap["avg_valence"] < -0.3:
@@ -66,4 +64,5 @@ class AffectiveState:
             state = "Neutral / engaged"
 
         snap["state"] = state
+        snap["voice_weight"] = self.voice_weight
         return snap
