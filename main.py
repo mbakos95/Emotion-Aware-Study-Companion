@@ -81,7 +81,7 @@ def interaction_loop():
 
             text = speech.listen()
             if not text or not text.strip():
-                print("🟡 No speech detected. Try again.")
+                print("No speech detected. Try again.")
                 continue
 
             import json
@@ -96,10 +96,10 @@ def interaction_loop():
             try:
                 response = llm.get_recommendation(summary, text)
             except Exception as e:
-                print(f"🔴 LLM call failed: {repr(e)}")
+                print(f"LLM call failed: {repr(e)}")
                 continue
 
-            print("\n🤖 Recommendation:")
+            print("\nRecommendation:")
             print(response)
 
             speaker.speak(response)
@@ -129,4 +129,4 @@ interaction_loop()
 audio.stop()
 cam.release()
 filename = report.export()
-print(f"\n🧾 Study feedback report saved as: {filename}")
+print(f"\nStudy feedback report saved as: {filename}")

@@ -1,3 +1,7 @@
+  Emotion-Aware Study Companion
+
+   Project structure
+
 emotion_aware_companion/
 │
 ├── main.py
@@ -8,21 +12,27 @@ emotion_aware_companion/
 ├── llm_agent.py
 │
 ├── requirements.txt
-└── README.md   (προαιρετικό)
+└── README.md
 
-
-
-
+   How it works (high level)
 
 The system runs locally and continuously monitors facial and vocal cues.
-When the user explicitly interacts, these implicit affective signals are fused with self-reported input and interpreted by a language model to generate adaptive study recommendations.”
 
-Αυτό δείχνει:
+-  Facial channel (implicit):  webcam frames are processed on-device to estimate emotion signals.
+-  Vocal channel (implicit):  microphone input is monitored on-device to estimate fatigue / voice activity.
 
-κατανόηση affective computing
+When the user explicitly interacts (pressing Enter and speaking), the system:
 
-human-in-the-loop
+1.  Transcribes  the user’s speech into text (self-reported input).
+2.  Summarizes  the recent affective state (valence, arousal, voice fatigue ratio).
+3.  Fuses  implicit affective signals with the user’s explicit intent (transcript).
+4. Sends only this  text + affective summary  to the LLM to generate  adaptive study recommendations .
 
-multimodal fusion
+> No raw audio or video is sent to the LLM—only the transcript and the affective summary.
 
-σωστή χρήση LLM (όχι gimmick)
+   What this demonstrates
+
+-  Affective computing understanding:  emotion is inferred from measurable cues and summarized as interpretable features (e.g., valence/arousal).
+-  Human-in-the-loop:  the user’s explicit speech acts as the controlling input; the model supports, it does not decide in isolation.
+-  Multimodal fusion:  combines facial + vocal signals with user text to build a more robust context.
+-  Correct LLM usage (not a gimmick):  the LLM is used for *reasoning and recommendation generation* based on structured signals, not for emotion detection itself.
