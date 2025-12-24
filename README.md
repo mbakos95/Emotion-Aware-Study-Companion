@@ -185,10 +185,10 @@ Controls:
 
 ---
 
-## 📫 Contact
+## 👨‍💻 Author
 
-For collaborations in **human-centric AI**, **multimodal systems**, or **applied ML engineering**:
-
-* GitHub: **mbakos95**
+**Christos Zampakos**
+Master’s in Artificial Intelligence & Deep Learning 
+GitHub: [mbakos95](https://github.com/mbakos95)
 
 
